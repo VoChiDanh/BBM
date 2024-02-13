@@ -1,0 +1,77 @@
+package net.danh.bbm.listeners;
+
+import io.lumine.mythic.api.adapters.AbstractLocation;
+import io.lumine.mythic.api.mobs.MythicMob;
+import io.lumine.mythic.bukkit.MythicBukkit;
+import io.lumine.mythic.bukkit.utils.serialize.Position;
+import io.lumine.mythic.lib.api.item.NBTItem;
+import net.danh.bbm.resources.Chat;
+import net.danh.bbm.resources.Files;
+import net.danh.mineregion.API.Events.MiningEvent;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.inventory.ItemStack;
+
+import java.util.Objects;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
+
+public class Mining implements Listener {
+
+    @EventHandler
+    public void onMiningRegion(MiningEvent e) {
+        Player p = e.getPlayer();
+        Block b = e.getBlock();
+        Location block_location = e.getBlockLocation();
+        ItemStack itemStack = p.getInventory().getItemInMainHand();
+        if (itemStack.getType() != Material.AIR) {
+            Chat.debug("Hand has item");
+            NBTItem nbtItem = NBTItem.get(itemStack);
+            int system_spawn = ThreadLocalRandom.current().nextInt(0, 100);
+            if (system_spawn > 0) {
+                Chat.debug("System spawn: " + system_spawn);
+                for (String block : Objects.requireNonNull(Files.getConfig().getConfigurationSection("blocks")).getKeys(false)) {
+                    Chat.debug(b.getType().toString());
+                    Chat.debug(block);
+                    if (b.getType().toString().equalsIgnoreCase(block)) {
+                        Chat.debug("Has block");
+                        String mob_spawn = Files.getConfig().getString("blocks." + block + ".mob_spawn");
+                        int spawn_chance = Files.getConfig().getInt("blocks." + block + ".chance");
+                        if (nbtItem.hasTag("BBM_REDUCE_MOB_SPAWN")) {
+                            Chat.debug("Hand stats");
+                            int reduce_chance = nbtItem.getInteger("BBM_REDUCE_MOB_SPAWN");
+                            if (spawn_chance > (system_spawn + reduce_chance)) {
+                                Chat.debug("Spawn chance: " + spawn_chance);
+                                Chat.debug("Real system chance: " + (system_spawn + reduce_chance));
+                                MythicMob mob = MythicBukkit.inst().getAPIHelper().getMythicMob(mob_spawn);
+                                if (mob != null) {
+                                    Chat.debug("Mob is not null");
+                                    Chat.sendMessage(p, Files.getMessage().getStringList("user.spawn_mob")
+                                            .stream().map(s -> s.replace("<name>", mob.getDisplayName().toString())).collect(Collectors.toList()));
+                                    mob.spawn(new AbstractLocation(Position.of(block_location.add(0, 3, 0))), 1);
+                                }
+                            }
+                        } else {
+                            if (spawn_chance > system_spawn) {
+                                Chat.debug("Spawn chance: " + spawn_chance);
+                                Chat.debug("Real system chance: " + system_spawn);
+                                MythicMob mob = MythicBukkit.inst().getAPIHelper().getMythicMob(mob_spawn);
+                                if (mob != null) {
+                                    Chat.debug("Mob is not null");
+                                    Chat.sendMessage(p, Files.getMessage().getStringList("user.spawn_mob")
+                                            .stream().map(s -> s.replace("<name>", mob.getDisplayName().toString())).collect(Collectors.toList()));
+                                    mob.spawn(new AbstractLocation(Position.of(b.getLocation().add(0, 3, 0))), 1);
+                                }
+                            }
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+    }
+}

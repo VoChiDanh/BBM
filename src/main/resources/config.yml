@@ -1,0 +1,8 @@
+settings:
+  debug: false
+  prefix: "<white>[ <aqua>BBM</aqua> ]"
+
+blocks:
+  OAK_LOG:
+    mob_spawn: MONSTER_WOOD
+    chance: 3

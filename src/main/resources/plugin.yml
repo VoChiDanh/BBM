@@ -1,0 +1,12 @@
+name: BBM
+version: '${project.version}'
+main: net.danh.bbm.BBM
+api-version: '1.20'
+depend:
+  - MythicMobs
+  - MMOItems
+  - MythicLib
+  - MineRegion
+commands:
+  bbm:
+    description: BBM CMD
