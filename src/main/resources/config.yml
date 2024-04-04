@@ -2,6 +2,12 @@ settings:
   debug: false
   prefix: "<white>[ <aqua>BBM</aqua> ]"
 
+gamemodes:
+  world: adventure
+  bskyblock_world: survival
+  bskyblock_world_nether: survival
+  bskyblock_world_the_end: survival
+
 blocks:
   OAK_LOG:
     mob_spawn: MONSTER_WOOD

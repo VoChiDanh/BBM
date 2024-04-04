@@ -4,7 +4,9 @@ import net.Indyuce.mmoitems.MMOItems;
 import net.Indyuce.mmoitems.stat.type.ItemStat;
 import net.danh.bbm.cmd.BBM_CMD;
 import net.danh.bbm.cmd.CMDBase;
+import net.danh.bbm.listeners.Join;
 import net.danh.bbm.listeners.Mining;
+import net.danh.bbm.listeners.WorldSwitch;
 import net.danh.bbm.resources.Files;
 import net.danh.bbm.stats.ReduceMobSpawn;
 import net.xconfig.bukkit.model.SimpleConfigurationManager;
@@ -33,7 +35,7 @@ public final class BBM extends JavaPlugin {
     public void onEnable() {
         new BBM_CMD();
         Files.loadFiles();
-        registerEvents(new Mining());
+        registerEvents(new Mining(), new WorldSwitch(), new Join());
     }
 
     @Override
