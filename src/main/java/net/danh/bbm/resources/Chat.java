@@ -5,6 +5,7 @@ import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import org.bukkit.ChatColor;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
@@ -12,6 +13,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Chat {
+
+
+    public static String normalColorize(String string) {
+        return ChatColor.translateAlternateColorCodes('&', string);
+    }
 
     public static void debug(String message) {
         if (Files.getConfig().getBoolean("settings.debug")) BBM.getBBMCore().getLogger().warning(message);
