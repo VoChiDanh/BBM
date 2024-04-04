@@ -15,6 +15,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
@@ -23,7 +24,7 @@ import java.util.stream.Collectors;
 public class Mining implements Listener {
 
     @EventHandler
-    public void onMiningRegion(MiningEvent e) {
+    public void onMiningRegion(@NotNull MiningEvent e) {
         Player p = e.getPlayer();
         Block b = e.getBlock();
         Location block_location = e.getBlockLocation();

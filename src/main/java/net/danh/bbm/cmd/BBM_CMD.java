@@ -4,6 +4,7 @@ import net.danh.bbm.resources.Chat;
 import net.danh.bbm.resources.Files;
 import org.bukkit.command.CommandSender;
 import org.bukkit.util.StringUtil;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,7 +16,7 @@ public class BBM_CMD extends CMDBase {
     }
 
     @Override
-    public void execute(CommandSender c, String[] args) {
+    public void execute(@NotNull CommandSender c, String[] args) {
         if (c.hasPermission("bbm.admin")) {
             if (args.length == 1) {
                 if (args[0].equalsIgnoreCase("reload")) {
@@ -27,7 +28,7 @@ public class BBM_CMD extends CMDBase {
     }
 
     @Override
-    public List<String> TabComplete(CommandSender sender, String[] args) {
+    public List<String> TabComplete(CommandSender sender, @NotNull String[] args) {
         List<String> completions = new ArrayList<>();
         List<String> commands = new ArrayList<>();
         if (args.length == 1) {

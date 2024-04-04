@@ -8,7 +8,11 @@ import org.bukkit.Material;
 
 public class ReduceMobSpawn extends DoubleStat implements ItemRestriction {
     public ReduceMobSpawn() {
-        super("BBM_REDUCE_MOB_SPAWN", Material.WOODEN_PICKAXE, "Reduce Mob Spawning", new String[]{"Add chance to reduce mob spawning while mining"}, new String[]{"!block", "all"});
+        super("BBM_REDUCE_MOB_SPAWN",
+                Material.WOODEN_PICKAXE,
+                "Reduce Mob Spawning",
+                new String[]{"Add chance to reduce mob spawning while mining"},
+                new String[]{"!block", "all"});
     }
 
     @Override

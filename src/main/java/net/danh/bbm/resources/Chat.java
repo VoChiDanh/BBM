@@ -57,6 +57,7 @@ public class Chat {
         return Arrays.stream(message).map(Chat::colorizewp).collect(Collectors.toList());
     }
 
+    @NotNull
     public static String replaceColorCode(String message) {
         message = message.replace("§", "&");
         if (message.contains("&0")) message = message.replace("&0","<black>");
