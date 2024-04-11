@@ -1,7 +1,6 @@
 package net.danh.bbm.cmd;
 
 import net.danh.bbm.BBM;
-import net.danh.mineregion.MineRegion;
 import org.bukkit.command.*;
 import org.jetbrains.annotations.NotNull;
 

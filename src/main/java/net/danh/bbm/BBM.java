@@ -3,7 +3,6 @@ package net.danh.bbm;
 import net.Indyuce.mmoitems.MMOItems;
 import net.Indyuce.mmoitems.stat.type.ItemStat;
 import net.danh.bbm.cmd.BBM_CMD;
-import net.danh.bbm.cmd.CMDBase;
 import net.danh.bbm.listeners.Join;
 import net.danh.bbm.listeners.Mining;
 import net.danh.bbm.listeners.WorldSwitch;

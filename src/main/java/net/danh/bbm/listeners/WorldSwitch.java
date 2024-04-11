@@ -14,11 +14,11 @@ public class WorldSwitch implements Listener {
         String game_mode = Files.getConfig().getString("gamemodes." + world_name, "survival");
         if (game_mode.equalsIgnoreCase("survival"))
             e.getPlayer().setGameMode(GameMode.SURVIVAL);
-         else if (game_mode.equalsIgnoreCase("creative"))
+        else if (game_mode.equalsIgnoreCase("creative"))
             e.getPlayer().setGameMode(GameMode.CREATIVE);
-         else if (game_mode.equalsIgnoreCase("adventure"))
+        else if (game_mode.equalsIgnoreCase("adventure"))
             e.getPlayer().setGameMode(GameMode.ADVENTURE);
-         else if (game_mode.equalsIgnoreCase("spectator"))
+        else if (game_mode.equalsIgnoreCase("spectator"))
             e.getPlayer().setGameMode(GameMode.SPECTATOR);
     }
 }

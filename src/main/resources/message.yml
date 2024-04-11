@@ -3,5 +3,5 @@ admin:
 
 user:
   spawn_mob:
-  - "<yellow>You have broken the block protected by the monster"
-  - "<gold>Monster <reset><name><gold> is spawning..."
+    - "<yellow>You have broken the block protected by the monster"
+    - "<gold>Monster <reset><name><gold> is spawning..."

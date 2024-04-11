@@ -20,6 +20,7 @@ public class Files {
     public static FileConfiguration getConfig() {
         return SimpleConfigurationManager.get().get("config.yml");
     }
+
     public static FileConfiguration getMessage() {
         return SimpleConfigurationManager.get().get("message.yml");
     }
