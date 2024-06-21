@@ -12,7 +12,7 @@
 	<name>BBM</name>
 	
 	<properties>
-		<java.version>17</java.version>
+		<java.version>21</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	
@@ -31,7 +31,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-shade-plugin</artifactId>
-				<version>3.5.2</version>
+				<version>3.5.3</version>
 				<configuration>
 					<relocations>
 						<relocation>
@@ -123,7 +123,7 @@
 		<dependency>
 			<groupId>io.lumine</groupId>
 			<artifactId>Mythic-Dist</artifactId>
-			<version>5.6.2-SNAPSHOT</version>
+			<version>5.7.0-SNAPSHOT</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -148,22 +148,22 @@
 		<dependency>
 			<groupId>de.tr7zw</groupId>
 			<artifactId>item-nbt-api</artifactId>
-			<version>2.12.3</version>
+			<version>2.13.1</version>
 		</dependency>
 		<dependency>
 			<groupId>net.kyori</groupId>
 			<artifactId>adventure-api</artifactId>
-			<version>4.16.0</version>
+			<version>4.17.0</version>
 		</dependency>
 		<dependency>
 			<groupId>net.kyori</groupId>
 			<artifactId>adventure-text-minimessage</artifactId>
-			<version>4.16.0</version>
+			<version>4.17.0</version>
 		</dependency>
 		<dependency>
 			<groupId>net.kyori</groupId>
 			<artifactId>adventure-text-serializer-plain</artifactId>
-			<version>4.16.0</version>
+			<version>4.17.0</version>
 		</dependency>
 	</dependencies>
 </project>
