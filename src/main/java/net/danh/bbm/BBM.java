@@ -6,13 +6,19 @@ import net.danh.bbm.cmd.BBM_CMD;
 import net.danh.bbm.listeners.Join;
 import net.danh.bbm.listeners.Mining;
 import net.danh.bbm.listeners.WorldSwitch;
+import net.danh.bbm.mythicdrop.MythicReg;
+import net.danh.bbm.playerdata.PlayerData;
+import net.danh.bbm.playerdata.exp.ExpBase;
+import net.danh.bbm.playerdata.player.PlayerLevel;
 import net.danh.bbm.resources.Files;
 import net.danh.bbm.stats.ReduceMobSpawn;
 import net.xconfig.bukkit.model.SimpleConfigurationManager;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.IOException;
 import java.util.Arrays;
 
 public final class BBM extends JavaPlugin {
@@ -32,13 +38,24 @@ public final class BBM extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        new BBM_CMD();
+        try {
+            ExpBase.load();
+        } catch (IOException e) {
+            getLogger().warning("Has issues with ExpBase (exp.txt)");
+            throw new RuntimeException(e);
+        }
         Files.loadFiles();
-        registerEvents(new Mining(), new WorldSwitch(), new Join());
+        new BBM_CMD();
+        registerEvents(new Mining(), new WorldSwitch(), new Join(), new MythicReg());
+        Files.updateConfig();
+        Files.updateMessage();
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> Bukkit.getOnlinePlayers().forEach(PlayerLevel::syncXPBar), 1L, 1L);
     }
 
     @Override
     public void onDisable() {
+        for (Player p : Bukkit.getOnlinePlayers())
+            new PlayerData(p).saveData();
         Files.saveFiles();
     }
 

@@ -1,7 +1,27 @@
 admin:
   reload_files: "<aqua>Reloaded Files!"
+  player_is_null: "<red>Player is not online or never join"
+  booster:
+    above_zero: "<red>Booster multi must be above 0!"
+    add_booster: "<green>Booster <multi> was add to <player>"
+  help:
+    - "<yellow>/BBM reload - Reload Files"
+    - "<yellow>/BBM booster <player> <multi> - Create Permanently Booster For Player"
+    - "<yellow>/BBM booster <player> <multi> <minutes> - Create Temporary Booster For Player"
 
 user:
   spawn_mob:
     - "<yellow>You have broken the block protected by the monster"
     - "<gold>Monster <reset><name><gold> is spawning..."
+  help:
+    - "<gold>/BBM booster - Check Booster Information"
+  exp_gain: "<gold>+<exp> EXP | <green><new_exp>/<needed_exp>"
+  booster:
+    active_booster:
+      - "<green>Booster of <player>: "
+      - "<aqua>   * Permanently: x<p_multi>"
+      - "<gold>   * Temporary "
+      - "<gold>      * Multi: x<t_multi>"
+      - "<gold>      * Times: <t_times>"
+    no_booster: "<red>You don't have any booster!"
+    expired_booster: "<red>Booster x<t_multi> has expired!"

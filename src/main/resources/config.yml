@@ -2,13 +2,59 @@ settings:
   debug: false
   prefix: "<white>[ <aqua>BBM</aqua> ]"
 
+exp_base: exp.txt
+
+# Config version
+version: 1
+
+# Times for showing booster
+times:
+  day: "day(s)"
+  hour: "hour(s)"
+  minute: "minute(s)"
+  second: "second(s)"
+
+# Booster options
+# <xp> -> xp mob drops
+# <p_multi> -> permanently multi
+# <t_multi> -> temporary multi
+# mode.all -> When permanently & temporary booster have multi > 1
+# mode.permanently -> When permanently booster has multi > 1, temporary booster hasn't active
+booster:
+  mode:
+    all: "<xp> * ( (<p_multi> + <t_multi>) / 2 )"
+    permanently: "<xp> * <p_multi>"
+
+
 gamemodes:
   world: adventure
-  bskyblock_world: survival
-  bskyblock_world_nether: survival
-  bskyblock_world_the_end: survival
 
 blocks:
   OAK_LOG:
     mob_spawn: MONSTER_WOOD
     chance: 3
+  COAL_ORE:
+    mob_spawn: MONSTER_COAL
+    chance: 5
+  COAL_BLOCK:
+    mob_spawn: MONSTER_COAL
+    chance: 10
+  IRON_ORE:
+    mob_spawn: MONSTER_IRON
+    chance: 5
+  IRON_BLOCK:
+    mob_spawn: MONSTER_IRON
+    chance: 10
+  DIAMOND_ORE:
+    mob_spawn: MONSTER_DIAMOND
+    chance: 5
+  DIAMOND_BLOCK:
+    mob_spawn: MONSTER_DIAMOND
+    chance: 10
+  EMERALD_ORE:
+    mob_spawn: MONSTER_EMERALD
+    chance: 5
+  EMERALD_BLOCK:
+    mob_spawn: MONSTER_EMERALD
+    chance: 10
+
