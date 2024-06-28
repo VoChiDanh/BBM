@@ -51,9 +51,9 @@ public class Mining implements Listener {
                         Chat.debug("Has block");
                         String mob_spawn = Files.getConfig().getString("blocks." + block + ".mob_spawn");
                         int spawn_chance = Files.getConfig().getInt("blocks." + block + ".chance");
-                        if (nbtItem.hasTag("BBM_REDUCE_MOB_SPAWN")) {
+                        if (nbtItem.hasTag("MMOITEMS_BBM_REDUCE_MOB_SPAWN")) {
                             Chat.debug("Hand stats");
-                            int reduce_chance = nbtItem.getInteger("BBM_REDUCE_MOB_SPAWN");
+                            int reduce_chance = nbtItem.getInteger("MMOITEMS_BBM_REDUCE_MOB_SPAWN");
                             if (spawn_chance > (system_spawn + reduce_chance)) {
                                 Chat.debug("Spawn chance: " + spawn_chance);
                                 Chat.debug("Real system chance: " + (system_spawn + reduce_chance));
