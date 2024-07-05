@@ -2,30 +2,12 @@ package net.danh.bbm.booster;
 
 import net.danh.bbm.calculator.Calculator;
 import net.danh.bbm.mythicdrop.MythicXP;
-import net.danh.bbm.playerdata.player.PlayerLevel;
 import net.danh.bbm.resources.Files;
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import java.util.Objects;
 
 public class Boosters {
-
-    public static void giveExp(Player p, int xp, Location location) {
-        if (MythicXP.booster.containsKey(p)) {
-            if (MythicXP.booster.get(p) > 1d) {
-                if (MythicXP.booster_temporary_multi.get(p) > 1d) {
-                    PlayerLevel.addPlayerEXP(p, getExp(p, xp));
-                } else {
-                    PlayerLevel.addPlayerEXP(p, getExp(p, xp));
-                }
-            } else {
-                PlayerLevel.addPlayerEXP(p, getExp(p, xp));
-            }
-        } else {
-            PlayerLevel.addPlayerEXP(p, getExp(p, xp));
-        }
-    }
 
     public static int getExp(Player p, int xp) {
         if (MythicXP.booster.containsKey(p)) {

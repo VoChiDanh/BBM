@@ -10,7 +10,6 @@ import net.danh.bbm.booster.Boosters;
 import net.danh.bbm.playerdata.player.PlayerLevel;
 import net.danh.bbm.resources.Number;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -29,12 +28,12 @@ public class MythicXP implements ILocationDrop {
         range = config.getString(new String[]{"range", "r"}, null);
     }
 
-    public void exp(Player p, Location location) {
+    public void exp(Player p) {
         if (xp > 0) {
             if (rangeCheck(p)) {
                 if (booster.containsKey(p)) {
                     if (booster.get(p) > 1d) {
-                        Boosters.giveExp(p, xp, location);
+                        PlayerLevel.addPlayerEXP(p, Boosters.getExp(p, xp));
                     } else {
                         PlayerLevel.addPlayerEXP(p, xp);
                     }
@@ -78,9 +77,8 @@ public class MythicXP implements ILocationDrop {
         Optional<SkillCaster> skillCaster = dropMetadata.getDropper();
         if (abstractEntity.isPresent() && skillCaster.isPresent()) {
             Player p = Bukkit.getPlayer(abstractEntity.get().getName());
-            Location location = new Location(Bukkit.getWorld(skillCaster.get().getLocation().getWorld().getName()), skillCaster.get().getLocation().getBlockX(), skillCaster.get().getLocation().getBlockY(), skillCaster.get().getLocation().getBlockZ());
             if (p != null) {
-                exp(p, location);
+                exp(p);
             }
         }
     }

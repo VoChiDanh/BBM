@@ -17,7 +17,7 @@ public class Join implements Listener {
     public void onJoin(@NotNull PlayerJoinEvent e) {
         String world_name = e.getPlayer().getWorld().getName();
         new PlayerData(e.getPlayer()).loadData();
-        String game_mode = Files.getConfig().getString("gamemodes." + world_name, "survival");
+        String game_mode = Files.getConfig().getString("gamemodes." + world_name, "adventure");
         if (game_mode.equalsIgnoreCase("survival")) e.getPlayer().setGameMode(GameMode.SURVIVAL);
         else if (game_mode.equalsIgnoreCase("creative")) e.getPlayer().setGameMode(GameMode.CREATIVE);
         else if (game_mode.equalsIgnoreCase("adventure")) e.getPlayer().setGameMode(GameMode.ADVENTURE);
