@@ -104,14 +104,15 @@ public class Mining implements Listener {
     @EventHandler
     public void onMythicDead(MythicMobDeathEvent e) {
         if (e.getKiller() instanceof Player p) {
-            for (String data : mobData.keySet()) {
-                if (data.startsWith(p.getName())) {
-                    if (mobData.get(data) == null || mobData.get(data).isDead()
-                            || mobData.get(data).getUniqueId().equals(e.getEntity().getUniqueId())) {
-                        mobData.remove(data, mobData.get(data));
+            if (!mobData.isEmpty())
+                for (String data : mobData.keySet()) {
+                    if (data.startsWith(p.getName())) {
+                        if (mobData.get(data) == null || mobData.get(data).isDead()
+                                || mobData.get(data).getUniqueId().equals(e.getEntity().getUniqueId())) {
+                            mobData.remove(data, mobData.get(data));
+                        }
                     }
                 }
-            }
         }
     }
 }
