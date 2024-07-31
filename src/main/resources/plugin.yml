@@ -7,6 +7,8 @@ depend:
   - MMOItems
   - MythicLib
   - MineRegion
+softdepend:
+  - PlaceholderAPI
 commands:
   bbm:
     description: BBM CMD

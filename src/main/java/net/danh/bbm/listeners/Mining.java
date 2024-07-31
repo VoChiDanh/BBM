@@ -110,6 +110,7 @@ public class Mining implements Listener {
                         if (mobData.get(data) == null || mobData.get(data).isDead()
                                 || mobData.get(data).getUniqueId().equals(e.getEntity().getUniqueId())) {
                             mobData.remove(data, mobData.get(data));
+                            break;
                         }
                     }
                 }

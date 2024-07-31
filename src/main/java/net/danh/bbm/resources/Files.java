@@ -4,14 +4,9 @@ import com.tchristofferson.configupdater.ConfigUpdater;
 import net.danh.bbm.BBM;
 import net.xconfig.bukkit.model.SimpleConfigurationManager;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
-import java.util.List;
-import java.util.Objects;
 import java.util.logging.Level;
 
 public class Files {
@@ -49,6 +44,7 @@ public class Files {
         }
         SimpleConfigurationManager.get().reload("config.yml");
     }
+
     public static void updateMessage() {
         SimpleConfigurationManager.get().save("message.yml");
         File messageFile = new File(BBM.getBBMCore().getDataFolder(), "message.yml");

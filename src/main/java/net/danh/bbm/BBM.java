@@ -13,6 +13,7 @@ import net.danh.bbm.playerdata.exp.ExpBase;
 import net.danh.bbm.playerdata.player.PlayerLevel;
 import net.danh.bbm.resources.Files;
 import net.danh.bbm.stats.ReduceMobSpawn;
+import net.danh.bbm.utils.PAPI;
 import net.xconfig.bukkit.model.SimpleConfigurationManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -44,6 +45,9 @@ public final class BBM extends JavaPlugin {
         } catch (IOException e) {
             getLogger().warning("Has issues with ExpBase (exp.txt)");
             throw new RuntimeException(e);
+        }
+        if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
+            new PAPI().register();
         }
         Files.loadFiles();
         new BBM_CMD();

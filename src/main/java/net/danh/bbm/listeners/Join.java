@@ -32,6 +32,7 @@ public class Join implements Listener {
             }
         }
     }
+
     @EventHandler
     public void onQuit(@NotNull PlayerQuitEvent e) {
         new PlayerData(e.getPlayer()).saveData();

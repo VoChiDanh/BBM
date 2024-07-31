@@ -1,4 +1,4 @@
-    package net.danh.bbm.calculator;
+package net.danh.bbm.calculator;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
