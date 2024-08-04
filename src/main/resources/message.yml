@@ -25,3 +25,5 @@ user:
       - "<gold>      * Times: <t_times>"
     no_booster: "<red>You don't have any booster!"
     expired_booster: "<red>Booster x<t_multi> has expired!"
+  auto_click_on: "<green>Auto click on!"
+  auto_click_off: "<red>Auto click off!"

@@ -6,6 +6,7 @@ import net.danh.bbm.playerdata.player.PlayerLevel;
 import net.danh.bbm.resources.Chat;
 import net.danh.bbm.resources.Files;
 import net.danh.bbm.resources.Number;
+import net.danh.bbm.tasks.AutoClicker;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -27,6 +28,17 @@ public class BBM_CMD extends CMDBase {
 
     @Override
     public void execute(@NotNull CommandSender c, String[] args) {
+        if (c.hasPermission("bbm.autoclick")) {
+            if (args.length == 1) {
+                if (args[0].equalsIgnoreCase("autoclick")) {
+                    if (c instanceof Player p) {
+                        if (p.hasMetadata("autoclicker_task"))
+                            AutoClicker.stopAutoClicker(p);
+                        else AutoClicker.startAutoClicker(p);
+                    }
+                }
+            }
+        }
         if (c.hasPermission("bbm.admin")) {
             if (args.length == 1) {
                 if (args[0].equalsIgnoreCase("reload")) {
@@ -201,6 +213,8 @@ public class BBM_CMD extends CMDBase {
                 commands.add("xp");
                 commands.add("reload");
             }
+            if (sender.hasPermission("bbm.autoclick"))
+                commands.add("autoclick");
             commands.add("booster");
             commands.add("help");
         }
