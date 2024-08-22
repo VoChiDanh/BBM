@@ -33,8 +33,8 @@ public class BBM_CMD extends CMDBase {
 
     @Override
     public void execute(@NotNull CommandSender c, String[] args) {
-        if (c.hasPermission("bbm.autoclick")) {
-            if (args.length == 1) {
+        if (args.length == 1) {
+            if (c.hasPermission("bbm.autoclick")) {
                 if (args[0].equalsIgnoreCase("autoclick")) {
                     if (c instanceof Player p) {
                         if (p.hasMetadata("autoclicker_task"))
@@ -42,28 +42,28 @@ public class BBM_CMD extends CMDBase {
                         else AutoClicker.startAutoClicker(p);
                     }
                 }
-                if (args[0].equalsIgnoreCase("check_upgrade")) {
-                    if (c instanceof Player p) {
-                        ItemStack itemStack = p.getInventory().getItemInMainHand();
-                        if (!itemStack.isEmpty() && itemStack.getType() != Material.AIR) {
-                            FileConfiguration config = Files.getItemUpgrade();
-                            NBTItem nbtItem = NBTItem.get(itemStack);
-                            if (nbtItem.hasType()) {
-                                String type = nbtItem.getType();
-                                String item_id_check = nbtItem.getString("MMOITEMS_ITEM_ID");
-                                String final_id;
-                                int level = 0;
-                                int index = item_id_check.lastIndexOf('_');
-                                if (index != -1 && index < item_id_check.length() - 1) {
-                                    final_id = item_id_check.substring(0, index);
-                                    level = Number.getInteger(item_id_check.substring(index + 1));
-                                } else {
-                                    final_id = item_id_check;
-                                }
-                                if (level > 0 && !final_id.equalsIgnoreCase(nbtItem.getString("MMOITEMS_ITEM_ID"))) {
-                                    if (config.contains("item_upgrade." + type + ";" + final_id + ".item_requirements")) {
-                                        ItemUpgrade.getInventory(p);
-                                    }
+            }
+            if (args[0].equalsIgnoreCase("check_upgrade")) {
+                if (c instanceof Player p) {
+                    ItemStack itemStack = p.getInventory().getItemInMainHand();
+                    if (!itemStack.isEmpty() && itemStack.getType() != Material.AIR) {
+                        FileConfiguration config = Files.getItemUpgrade();
+                        NBTItem nbtItem = NBTItem.get(itemStack);
+                        if (nbtItem.hasType()) {
+                            String type = nbtItem.getType();
+                            String item_id_check = nbtItem.getString("MMOITEMS_ITEM_ID");
+                            String final_id;
+                            int level = 0;
+                            int index = item_id_check.lastIndexOf('_');
+                            if (index != -1 && index < item_id_check.length() - 1) {
+                                final_id = item_id_check.substring(0, index);
+                                level = Number.getInteger(item_id_check.substring(index + 1));
+                            } else {
+                                final_id = item_id_check;
+                            }
+                            if (level > 0 && !final_id.equalsIgnoreCase(nbtItem.getString("MMOITEMS_ITEM_ID"))) {
+                                if (config.contains("item_upgrade." + type + ";" + final_id + ".item_requirements")) {
+                                    ItemUpgrade.getInventory(p);
                                 }
                             }
                         }
