@@ -27,3 +27,7 @@ user:
     expired_booster: "<red>Booster x<t_multi> has expired!"
   auto_click_on: "<green>Auto click on!"
   auto_click_off: "<red>Auto click off!"
+  upgrade_item:
+    not_enough_item: "<red>You don't have enough requirement items!"
+    upgrade_success: "<green>Upgrade successfully"
+    reach_max_upgrade: "<green>You have reached the maximum upgrade level"

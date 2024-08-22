@@ -1,6 +1,8 @@
 package net.danh.bbm.cmd;
 
+import io.lumine.mythic.lib.api.item.NBTItem;
 import net.danh.bbm.BBM;
+import net.danh.bbm.gui.ItemUpgrade;
 import net.danh.bbm.mythicdrop.MythicXP;
 import net.danh.bbm.playerdata.player.PlayerLevel;
 import net.danh.bbm.resources.Chat;
@@ -9,8 +11,11 @@ import net.danh.bbm.resources.Number;
 import net.danh.bbm.tasks.AutoClicker;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.StringUtil;
 import org.jetbrains.annotations.NotNull;
@@ -35,6 +40,33 @@ public class BBM_CMD extends CMDBase {
                         if (p.hasMetadata("autoclicker_task"))
                             AutoClicker.stopAutoClicker(p);
                         else AutoClicker.startAutoClicker(p);
+                    }
+                }
+                if (args[0].equalsIgnoreCase("check_upgrade")) {
+                    if (c instanceof Player p) {
+                        ItemStack itemStack = p.getInventory().getItemInMainHand();
+                        if (!itemStack.isEmpty() && itemStack.getType() != Material.AIR) {
+                            FileConfiguration config = Files.getItemUpgrade();
+                            NBTItem nbtItem = NBTItem.get(itemStack);
+                            if (nbtItem.hasType()) {
+                                String type = nbtItem.getType();
+                                String item_id_check = nbtItem.getString("MMOITEMS_ITEM_ID");
+                                String final_id;
+                                int level = 0;
+                                int index = item_id_check.lastIndexOf('_');
+                                if (index != -1 && index < item_id_check.length() - 1) {
+                                    final_id = item_id_check.substring(0, index);
+                                    level = Number.getInteger(item_id_check.substring(index + 1));
+                                } else {
+                                    final_id = item_id_check;
+                                }
+                                if (level > 0 && !final_id.equalsIgnoreCase(nbtItem.getString("MMOITEMS_ITEM_ID"))) {
+                                    if (config.contains("item_upgrade." + type + ";" + final_id + ".item_requirements")) {
+                                        ItemUpgrade.getInventory(p);
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -216,6 +248,7 @@ public class BBM_CMD extends CMDBase {
             if (sender.hasPermission("bbm.autoclick"))
                 commands.add("autoclick");
             commands.add("booster");
+            commands.add("check_upgrade");
             commands.add("help");
         }
         StringUtil.copyPartialMatches(args[0], commands, completions);

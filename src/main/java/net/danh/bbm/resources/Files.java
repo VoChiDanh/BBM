@@ -12,15 +12,15 @@ import java.util.logging.Level;
 public class Files {
 
     public static void loadFiles() {
-        SimpleConfigurationManager.get().build("", false, "config.yml", "message.yml", "playerData/example_data.yml");
+        SimpleConfigurationManager.get().build("", false, "config.yml", "message.yml", "item_upgrade.yml", "playerData/example_data.yml");
     }
 
     public static void saveFiles() {
-        SimpleConfigurationManager.get().save("config.yml", "message.yml", "playerData/example_data.yml");
+        SimpleConfigurationManager.get().save("config.yml", "message.yml", "item_upgrade.yml", "playerData/example_data.yml");
     }
 
     public static void reloadFiles() {
-        SimpleConfigurationManager.get().reload("config.yml", "message.yml", "playerData/example_data.yml");
+        SimpleConfigurationManager.get().reload("config.yml", "message.yml", "item_upgrade.yml", "playerData/example_data.yml");
     }
 
     public static FileConfiguration getConfig() {
@@ -31,6 +31,9 @@ public class Files {
         return SimpleConfigurationManager.get().get("message.yml");
     }
 
+    public static FileConfiguration getItemUpgrade() {
+        return SimpleConfigurationManager.get().get("item_upgrade.yml");
+    }
 
     public static void updateConfig() {
         SimpleConfigurationManager.get().save("config.yml");

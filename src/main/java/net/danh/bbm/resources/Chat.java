@@ -19,6 +19,10 @@ public class Chat {
         return ChatColor.translateAlternateColorCodes('&', replaceColorSymbol(string));
     }
 
+    public static List<String> normalColorize(List<String> list) {
+        return list.stream().map(Chat::normalColorize).collect(Collectors.toList());
+    }
+
     public static void debug(String message) {
         if (Files.getConfig().getBoolean("settings.debug")) BBM.getBBMCore().getLogger().warning(message);
     }
