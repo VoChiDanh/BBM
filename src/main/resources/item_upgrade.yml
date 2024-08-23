@@ -48,7 +48,6 @@ gui_upgrade:
       slots:
         - 2
         - 3
-        - 4
         - 5
         - 6
         - 10
@@ -87,6 +86,19 @@ gui_upgrade:
       lore:
         - '&7Click to upgrade item'
       action: confirm_upgrade
+    force_upgrade:
+      material: NETHER_STAR
+      slot: 4
+      enchants:
+        - UNBREAKING;1
+      flags:
+        - HIDE_ENCHANTS
+      display: '&aForce Confirm'
+      lore:
+        - '&7Click to upgrade item'
+      action: force_upgrade
+      force_upgrade_item:
+        - MMOITEMS;MATERIAL;FORCE_UPGRADE;1
 item_upgrade:
   TOOL;AXE:
     item_requirements:

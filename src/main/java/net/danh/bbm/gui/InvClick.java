@@ -72,6 +72,40 @@ public class InvClick implements Listener {
                                                     Files.getMessage().getString("user.upgrade_item.reach_max_upgrade"));
                                         }
                                     }
+                                } else if (action.equalsIgnoreCase("force_upgrade")) {
+                                    NBTItem nbtItem = NBTItem.get(p.getInventory().getItemInMainHand());
+                                    if (nbtItem.hasType()) {
+                                        String type = nbtItem.getType();
+                                        String item_id_check = nbtItem.getString("MMOITEMS_ITEM_ID");
+                                        String final_id;
+                                        int level = 0;
+                                        int index = item_id_check.lastIndexOf('_');
+                                        if (index != -1 && index < item_id_check.length() - 1) {
+                                            final_id = item_id_check.substring(0, index);
+                                            level = Number.getInteger(item_id_check.substring(index + 1));
+                                        } else {
+                                            final_id = item_id_check;
+                                        }
+                                        String result_id = final_id + "_" + (level + 1);
+                                        ItemStack nextItem = MMOItems.plugin.getItem(type, result_id);
+                                        if (nextItem != null) {
+                                            List<String> requirementsItem = PlaceholderAPI.setPlaceholders(p,
+                                                    config.getStringList(item_path + ".force_upgrade_item"));
+                                            int meetRequirements = ItemUpgrade.getMeetItemsRequirement(p, requirementsItem);
+                                            if (meetRequirements == requirementsItem.size()) {
+                                                p.closeInventory();
+                                                p.getInventory().setItemInMainHand(nextItem);
+                                                Chat.sendMessage(p,
+                                                        Files.getMessage().getString("user.upgrade_item.upgrade_success"));
+                                            } else {
+                                                Chat.sendMessage(p,
+                                                        Files.getMessage().getString("user.upgrade_item.not_enough_item"));
+                                            }
+                                        } else {
+                                            Chat.sendMessage(p,
+                                                    Files.getMessage().getString("user.upgrade_item.reach_max_upgrade"));
+                                        }
+                                    }
                                 }
                             }
                         }

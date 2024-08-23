@@ -17,6 +17,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -133,7 +134,7 @@ public class ItemUpgrade {
         return amountCheck;
     }
 
-    public static List<ItemStack> getReqItems(String type, String final_id, int level) {
+    public static @NotNull List<ItemStack> getReqItems(String type, String final_id, int level) {
         List<ItemStack> reqList = new ArrayList<>();
         FileConfiguration config = Files.getItemUpgrade();
         if (Objects.requireNonNull(config.getConfigurationSection("item_upgrade." + type + ";" + final_id + ".item_requirements"))
@@ -152,23 +153,12 @@ public class ItemUpgrade {
                     if (itemStack != null) {
                         if (amount_check <= 640
                                 && (amount_check + amount) <= 640) {
-                            if (amount <= 64) {
-                                itemStack.setAmount(amount);
-                                reqList.add(itemStack);
-                                amount_check += amount;
-                            } else {
-                                int stack = amount / 64;
-                                for (int i = 1; i <= stack; i++) {
-                                    itemStack.setAmount(64);
-                                    reqList.add(itemStack);
-                                    amount_check += 64;
-                                }
-                                int remain = amount - (64 * stack);
-                                if (remain > 0) {
-                                    itemStack.setAmount(remain);
-                                    reqList.add(itemStack);
-                                    amount_check += remain;
-                                }
+                            while (amount > 0) {
+                                ItemStack stack = itemStack.clone();
+                                stack.setAmount(Math.min(amount, stack.getMaxStackSize()));
+                                reqList.add(stack);
+                                amount_check += stack.getAmount();
+                                amount -= stack.getAmount();
                             }
                         }
                     }
@@ -178,7 +168,7 @@ public class ItemUpgrade {
         return reqList;
     }
 
-    public static ItemStack getItem(String item_path) {
+    public static @Nullable ItemStack getItem(String item_path) {
         FileConfiguration config = Files.getItemUpgrade();
         String materialID = config.getString(item_path + ".material");
         if (materialID != null) {
