@@ -57,8 +57,7 @@ public class InvClick implements Listener {
                                         if (nextItem != null) {
                                             List<String> requirementsItem = PlaceholderAPI.setPlaceholders(p,
                                                     config.getStringList("item_upgrade." + type + ";" + final_id + ".item_requirements.ingredients_" + level));
-                                            int meetRequirements = ItemUpgrade.getMeetItemsRequirement(p, requirementsItem);
-                                            if (meetRequirements == requirementsItem.size()) {
+                                            if (ItemUpgrade.getMeetItemsRequirement(p, requirementsItem)) {
                                                 p.closeInventory();
                                                 p.getInventory().setItemInMainHand(nextItem);
                                                 Chat.sendMessage(p,
@@ -91,8 +90,7 @@ public class InvClick implements Listener {
                                         if (nextItem != null) {
                                             List<String> requirementsItem = PlaceholderAPI.setPlaceholders(p,
                                                     config.getStringList(item_path + ".force_upgrade_item"));
-                                            int meetRequirements = ItemUpgrade.getMeetItemsRequirement(p, requirementsItem);
-                                            if (meetRequirements == requirementsItem.size()) {
+                                            if (ItemUpgrade.getMeetItemsRequirement(p, requirementsItem)) {
                                                 p.closeInventory();
                                                 p.getInventory().setItemInMainHand(nextItem);
                                                 Chat.sendMessage(p,

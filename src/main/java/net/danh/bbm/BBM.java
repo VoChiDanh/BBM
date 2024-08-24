@@ -4,10 +4,7 @@ import net.Indyuce.mmoitems.MMOItems;
 import net.Indyuce.mmoitems.stat.type.ItemStat;
 import net.danh.bbm.cmd.BBM_CMD;
 import net.danh.bbm.gui.InvClick;
-import net.danh.bbm.listeners.Arrow;
-import net.danh.bbm.listeners.Join;
-import net.danh.bbm.listeners.Mining;
-import net.danh.bbm.listeners.WorldSwitch;
+import net.danh.bbm.listeners.*;
 import net.danh.bbm.mythicdrop.MythicReg;
 import net.danh.bbm.playerdata.PlayerData;
 import net.danh.bbm.playerdata.exp.ExpBase;
@@ -52,7 +49,7 @@ public final class BBM extends JavaPlugin {
         }
         Files.loadFiles();
         new BBM_CMD();
-        registerEvents(new Mining(), new WorldSwitch(), new Join(), new MythicReg(), new Arrow(), new InvClick());
+        registerEvents(new Mining(), new WorldSwitch(), new Join(), new MythicReg(), new Arrow(), new InvClick(), new VoidDeath());
         Files.updateConfig();
         Files.updateMessage();
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> Bukkit.getOnlinePlayers().forEach(PlayerLevel::syncXPBar), 1L, 1L);

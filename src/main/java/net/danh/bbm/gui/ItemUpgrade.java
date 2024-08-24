@@ -89,41 +89,42 @@ public class ItemUpgrade {
         p.openInventory(inv);
     }
 
-    public static int getMeetItemsRequirement(Player p, @NotNull List<String> requirementsItem) {
+    public static boolean getMeetItemsRequirement(@NotNull Player p, @NotNull List<String> requirementsItem) {
         int amountCheck = 0;
-        for (String s : requirementsItem) {
-            String[] reqSplit = s.split(";");
-            String itemPlugin = reqSplit[0];
-            if (itemPlugin.equalsIgnoreCase("MMOITEMS")) {
-                String itemType = reqSplit[1];
-                String itemID = reqSplit[2];
-                int amount = Integer.parseInt(reqSplit[3]);
-                for (ItemStack itemStack : p.getInventory().getContents()) {
-                    if (itemStack != null) {
-                        NBTItem nbtItem = NBTItem.get(itemStack);
-                        if (nbtItem != null) {
-                            if (nbtItem.hasType() && nbtItem.getType().equalsIgnoreCase(itemType)) {
-                                if (nbtItem.getString("MMOITEMS_ITEM_ID").equalsIgnoreCase(itemID)) {
-                                    if (getPlayerAmount(p, itemStack) >= amount) {
-                                        removeItems(p, itemStack, amount);
-                                        amountCheck++;
+        List<String> checkedItems = new ArrayList<>();
+        for (ItemStack itemStack : p.getInventory().getContents()) {
+            for (String s : requirementsItem) {
+                if (!checkedItems.contains(s) && amountCheck < requirementsItem.size()) {
+                    String[] reqSplit = s.split(";");
+                    String itemPlugin = reqSplit[0];
+                    if (itemPlugin.equalsIgnoreCase("MMOITEMS")) {
+                        String itemType = reqSplit[1];
+                        String itemID = reqSplit[2];
+                        int amount = Integer.parseInt(reqSplit[3]);
+                        if (itemStack != null) {
+                            NBTItem nbtItem = NBTItem.get(itemStack);
+                            if (nbtItem != null) {
+                                if (nbtItem.hasType() && nbtItem.getType().equalsIgnoreCase(itemType)) {
+                                    if (nbtItem.getString("MMOITEMS_ITEM_ID").equalsIgnoreCase(itemID)) {
+                                        if (getPlayerAmount(p, itemStack) >= amount) {
+                                            amountCheck++;
+                                            checkedItems.add(s);
+                                        }
                                     }
                                 }
                             }
                         }
-                    }
-                }
-            } else if (itemPlugin.equalsIgnoreCase("VANILLA")) {
-                String itemType = reqSplit[1];
-                int amount = Integer.parseInt(reqSplit[2]);
-                for (ItemStack itemStack : p.getInventory().getContents()) {
-                    if (itemStack != null) {
-                        if (itemStack.getType() != Material.AIR) {
-                            if (itemStack.getType().toString().equals(itemType)
-                                    && !itemStack.hasItemMeta()) {
-                                if (getPlayerAmount(p, itemStack) >= amount) {
-                                    removeItems(p, itemStack, amount);
-                                    amountCheck++;
+                    } else if (itemPlugin.equalsIgnoreCase("VANILLA")) {
+                        String itemType = reqSplit[1];
+                        int amount = Integer.parseInt(reqSplit[2]);
+                        if (itemStack != null) {
+                            if (itemStack.getType() != Material.AIR) {
+                                if (itemStack.getType().toString().equals(itemType)
+                                        && !itemStack.hasItemMeta()) {
+                                    if (getPlayerAmount(p, itemStack) >= amount) {
+                                        amountCheck++;
+                                        checkedItems.add(s);
+                                    }
                                 }
                             }
                         }
@@ -131,7 +132,57 @@ public class ItemUpgrade {
                 }
             }
         }
-        return amountCheck;
+        if (amountCheck == requirementsItem.size() && checkedItems.size() == requirementsItem.size())
+            removeItemReq(p, checkedItems);
+
+        return amountCheck == requirementsItem.size() && checkedItems.size() == requirementsItem.size();
+    }
+
+    private static void removeItemReq(@NotNull Player p, List<String> checkedItems) {
+        int amountCheck = 0;
+        List<String> removedItems = new ArrayList<>();
+        for (ItemStack itemStack : p.getInventory().getContents()) {
+            for (String checkID : checkedItems) {
+                if (!removedItems.contains(checkID) && amountCheck < checkedItems.size()) {
+                    String[] reqSplit = checkID.split(";");
+                    String itemPlugin = reqSplit[0];
+                    if (itemPlugin.equalsIgnoreCase("MMOITEMS")) {
+                        String itemType = reqSplit[1];
+                        String itemID = reqSplit[2];
+                        int amount = Integer.parseInt(reqSplit[3]);
+                        if (itemStack != null) {
+                            NBTItem nbtItem = NBTItem.get(itemStack);
+                            if (nbtItem != null) {
+                                if (nbtItem.hasType() && nbtItem.getType().equalsIgnoreCase(itemType)) {
+                                    if (nbtItem.getString("MMOITEMS_ITEM_ID").equalsIgnoreCase(itemID)) {
+                                        if (getPlayerAmount(p, itemStack) >= amount) {
+                                            removeItems(p, itemStack, amount);
+                                            amountCheck++;
+                                            removedItems.add(checkID);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    } else if (itemPlugin.equalsIgnoreCase("VANILLA")) {
+                        String itemType = reqSplit[1];
+                        int amount = Integer.parseInt(reqSplit[2]);
+                        if (itemStack != null) {
+                            if (itemStack.getType() != Material.AIR) {
+                                if (itemStack.getType().toString().equals(itemType)
+                                        && !itemStack.hasItemMeta()) {
+                                    if (getPlayerAmount(p, itemStack) >= amount) {
+                                        removeItems(p, itemStack, amount);
+                                        amountCheck++;
+                                        removedItems.add(checkID);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
     public static @NotNull List<ItemStack> getReqItems(String type, String final_id, int level) {
